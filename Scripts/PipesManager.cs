@@ -30,7 +30,7 @@ public class PipesManager : MonoBehaviour
         var pipeGameObject = Instantiate(pipeModel);
         var pipeTransform = pipeGameObject.GetComponent<Transform>();
 
-        float y = Random.Range(-1.7f, 0.3f);
+        float y = Random.Range(-1.5f, 0.3f);
 
         pipeTransform.position = new Vector3(spawnPoint.position.x, y);
     }
