@@ -7,16 +7,28 @@ public class Pipe : MonoBehaviour
     public float speed;
     void Start()
     {
-        
+
     }
-
-    void Update()
-    {
-        transform.position += Vector3.left * Time.deltaTime * speed;
-
-        if (transform.position.x < -2.2f)
+        void Update()
         {
-            Destroy(gameObject);
+            switch (GameManager.instance.status)
+            {
+                case GameStatus.Start:
+                    break;
+                case GameStatus.Play:
+                    PlayUpdate();
+                    break;
+                case GameStatus.GameOver:
+                    break;
+            }
+        }
+        void PlayUpdate()
+        {
+            transform.position += Vector3.left * Time.deltaTime * speed;
+
+            if (transform.position.x < -2.2f)
+            {
+                Destroy(gameObject);
+            }
         }
     }
-}

@@ -12,26 +12,49 @@ public class PipesManager : MonoBehaviour
 
     void Start()
     {
-        
+        currentTime = interval;
     }
 
     void Update()
     {
-        currentTime += Time.deltaTime;
-        if (currentTime > interval)
+        switch (GameManager.instance.status)
         {
-            CreatePipe();
-            currentTime = 0f;
+            case GameStatus.Start:
+                break;
+            case GameStatus.Play:
+                PlayUpdate();
+                break;
+            case GameStatus.GameOver:
+                break;
+        }
+
+
+        void PlayUpdate()
+        {
+            currentTime += Time.deltaTime;
+            if (currentTime > interval)
+            {
+                CreatePipe();
+                currentTime = 0f;
+            }
         }
     }
 
-    void CreatePipe ()
+    void CreatePipe()
     {
-        var pipeGameObject = Instantiate(pipeModel);
+        var pipeGameObject = Instantiate(pipeModel, transform);
         var pipeTransform = pipeGameObject.GetComponent<Transform>();
 
         float y = Random.Range(-1.5f, 0.3f);
 
         pipeTransform.position = new Vector3(spawnPoint.position.x, y);
+    }
+
+    public void Restart()
+    {
+        while (transform.childCount > 0)
+        {
+            DestroyImmediate(transform.GetChild(0).gameObject);
+        }
     }
 }
